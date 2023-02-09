@@ -56,6 +56,12 @@ Defaults to ``policy``.
 
 .. end-minio-openid-claim-name
 
+.. start-minio-openid-display-name
+
+Specify the user-facing name the MinIO Console displays on the login screen.
+
+.. end-minio-openid-display-name
+
 .. start-minio-openid-claim-prefix
 
 Specify the 
@@ -100,6 +106,41 @@ more information.
    port number.
 
 .. end-minio-openid-redirect-uri
+
+.. start-minio-openid-claim-userinfo
+
+Specify the OpenID User info API endpoint for the OIDC service.
+For example, ``https://oidc-endpoint:port/realms/REALM/protocol/openid-connect/userinfo``
+
+Some OIDC providers do not provide group information as part of the JWT response after authentication.
+Specify this URL to direct MinIO to make an additional API call to construct the complete JWT token.
+
+.. end-minio-openid-claim-userinfo
+
+.. start-minio-openid-vendor
+
+Specify the OIDC Vendor to enable specific supported behaviors for that vendor.
+
+Supports the following value:
+
+- ``keycloak``
+
+.. end-minio-openid-vendor
+
+.. start-minio-openid-keycloak-realm
+
+Specify the Keycloak Realm to use as part of Keycloak Admin API Operations.
+For example, specify ``main`` to specifically use that Realm.
+
+.. end-minio-openid-keycloak-realm
+
+.. start-minio-openid-keycloak-admin-url
+
+Specify the Keycloak Admin API URL. 
+MinIO can use this URL if configured to periodically validate authenticated Keycloak users as active/existing.
+For example, ``https://keycloak-endpoint:port/admin/``.
+
+.. end-minio-openid-keycloak-admin-url
 
 .. start-minio-openid-comment
 

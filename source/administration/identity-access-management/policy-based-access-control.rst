@@ -816,3 +816,25 @@ MinIO supports the following conditions for use with defining policies for
 
 For complete information on any listed condition key, see the :iam-docs:`IAM
 Condition Element Documentation <reference_policies_elements_condition.html>`
+
+Policy Variables
+----------------
+
+MinIO supports using policy variables for automatically substituting context from the authenticated user into a policy.
+For example, you can use policy variables to create a policy that only grants access to prefixes that match the authenticated username.
+Alternatively, you could restrict access to only those authenticated users whose source IP or hostname matches a predefined pattern.
+
+MinIO supports policy variables for each of the supported identity managers:
+
+- MinIO Identity Management Policy Variables
+- OpenID Connect (OIDC) Policy Variables
+- Active Directory / LDAP (AD/LDAP) Policy Variables
+
+MinIO Policy Variables
+~~~~~~~~~~~~~~~~~~~~~~
+
+OIDC Policy Variables
+~~~~~~~~~~~~~~~~~~~~~
+
+AD/LDAP Policy Variables
+~~~~~~~~~~~~~~~~~~~~~~~~

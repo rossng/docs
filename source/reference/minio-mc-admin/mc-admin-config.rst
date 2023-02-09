@@ -2213,6 +2213,8 @@ configuration settings.
    .. mc-conf:: claim_name
       :delimiter: " "
 
+      *Optional*
+
       .. include:: /includes/common-minio-external-auth.rst
          :start-after: start-minio-openid-claim-name
          :end-before: end-minio-openid-claim-name
@@ -2223,13 +2225,24 @@ configuration settings.
    .. mc-conf:: claim_prefix
       :delimiter: " "
 
+      *Optional*
+
       .. include:: /includes/common-minio-external-auth.rst
          :start-after: start-minio-openid-claim-prefix
          :end-before: end-minio-openid-claim-prefix
 
       This configuration setting corresponds with the 
       :envvar:`MINIO_IDENTITY_OPENID_CLAIM_PREFIX` environment variable.
-      
+
+   .. mc-conf:: display_name
+      :delimiter: " "
+
+      *Optional*
+
+      .. include:: /includes/common-minio-external-auth.rst
+         :start-after: start-minio-openid-display-name
+         :end-before: end-minio-openid-display-name
+
    .. mc-conf:: scopes
       :delimiter: " "
 
@@ -2245,13 +2258,53 @@ configuration settings.
 
       *Optional*
 
-
       .. include:: /includes/common-minio-external-auth.rst
          :start-after: start-minio-openid-redirect-uri
          :end-before: end-minio-openid-redirect-uri
 
       This configuration setting corresponds with the 
       :envvar:`MINIO_IDENTITY_OPENID_REDIRECT_URI` environment variable.
+
+   .. mc-conf:: claim_userinfo
+      :delimiter: " "
+
+      *Optional*
+
+      .. include:: /includes/common-minio-external-auth.rst
+         :start-after: start-minio-openid-claim-userinfo
+         :end-before: end-minio-openid-claim-userinfo
+
+   .. mc-conf:: vendor
+      :delimiter: " "
+
+      *Optional*
+
+      .. include:: /includes/common-minio-external-auth.rst
+         :start-after: start-minio-openid-vendor
+         :end-before: end-minio-openid-vendor
+
+   .. mc-conf:: keycloak_realm
+      :delimiter: " "
+
+      *Optional*
+
+      .. include:: /includes/common-minio-external-auth.rst
+         :start-after: start-minio-openid-keycloak-realm
+         :end-before: end-minio-openid-keycloak-realm
+
+      Requires :mc-conf:`identity_openid.vendor` set to ``keycloak``.
+
+   .. mc-conf:: keycloak_admin_url
+      :delimiter: " "
+
+      *Optional*
+
+      .. include:: /includes/common-minio-external-auth.rst
+         :start-after: start-minio-openid-keycloak-admin-url
+         :end-before: end-minio-openid-keycloak-admin-url
+
+      Requires :mc-conf:`identity_openid.vendor` set to ``keycloak``.
+
 
    .. mc-conf:: comment
       :delimiter: " "
