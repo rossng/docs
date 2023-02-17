@@ -203,14 +203,14 @@ If you do not enable this functionality, the earliest point in time that MinIO c
 
 MinIO supports multiple methods for configuring Keycloak Admin API Support:
 
-- Using a terminal/shell and the :mc:`mc admin idp openid` command
+- Using a terminal/shell and the :mc-cmd:`mc admin idp openid` command
 - Using environment variables set prior to starting MinIO
 
 .. tab-set::
 
    .. tab-item:: CLI
 
-      You can use the :mc:`mc admin idp openid update` command to modify the configuration settings for an existing Keycloak service.
+      You can use the :mc-cmd:`mc admin idp openid update` command to modify the configuration settings for an existing Keycloak service.
       You can alternatively include the following configuration settings when setting up Keycloak for the first time.
       The command takes all supported :ref:`OpenID Configuration Settings <minio-open-id-config-settings>`:
 
