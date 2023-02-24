@@ -2265,6 +2265,17 @@ configuration settings.
       This configuration setting corresponds with the 
       :envvar:`MINIO_IDENTITY_OPENID_REDIRECT_URI` environment variable.
 
+   .. mc-conf:: redirect_uri_dynamic
+      :delimiter: " "
+
+      *Optional*
+
+      .. include:: /includes/common-minio-external-auth.rst
+         :start-after: start-minio-openid-redirect-uri-dynamic
+         :end-before: end-minio-openid-redirect-uri-dynamic
+
+      This configuration setting corresponds with the :envvar:`MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC` environment variable.
+
    .. mc-conf:: claim_userinfo
       :delimiter: " "
 
@@ -2273,6 +2284,8 @@ configuration settings.
       .. include:: /includes/common-minio-external-auth.rst
          :start-after: start-minio-openid-claim-userinfo
          :end-before: end-minio-openid-claim-userinfo
+
+      This configuration setting corresponds with the :envvar:`MINIO_IDENTITY_OPENID_CLAIM_USERINFO` environment variable.
 
    .. mc-conf:: vendor
       :delimiter: " "
@@ -2283,6 +2296,8 @@ configuration settings.
          :start-after: start-minio-openid-vendor
          :end-before: end-minio-openid-vendor
 
+      This configuration setting corresponds with the :envvar:`MINIO_IDENTITY_OPENID_VENDOR` environment variable.
+
    .. mc-conf:: keycloak_realm
       :delimiter: " "
 
@@ -2291,6 +2306,8 @@ configuration settings.
       .. include:: /includes/common-minio-external-auth.rst
          :start-after: start-minio-openid-keycloak-realm
          :end-before: end-minio-openid-keycloak-realm
+
+      This configuration setting corresponds with the :envvar:`MINIO_IDENTITY_OPENID_KEYCLOAK_REALM` environment variable.
 
       Requires :mc-conf:`identity_openid.vendor` set to ``keycloak``.
 
@@ -2302,6 +2319,8 @@ configuration settings.
       .. include:: /includes/common-minio-external-auth.rst
          :start-after: start-minio-openid-keycloak-admin-url
          :end-before: end-minio-openid-keycloak-admin-url
+
+      This configuration setting corresponds with the :envvar:`MINIO_IDENTITY_OPENID_KEYCLOAK_ADMIN_URL` environment variable.
 
       Requires :mc-conf:`identity_openid.vendor` set to ``keycloak``.
 

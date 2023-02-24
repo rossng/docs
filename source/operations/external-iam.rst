@@ -14,12 +14,11 @@ MinIO supports multiple external identity managers through the following support
 
 - :ref:`OpenID Connect-Compatible <minio-external-iam-oidc>`
 - :ref:`Active Directory / LDAP <minio-external-iam-ad-ldap>`
-- :ref:`Pluggable Identity Provider <minio-external-iam-pluggable>`
 
 The following tutorials provide specific guidance for select IDP software:
 
-- :ref:`Configure MinIO Authentication with KeyCloak <>`
-- :ref:`Configure MinIO Authentication with Dex <>`
+- :ref:`Configure MinIO Authentication with KeyCloak <minio-authenticate-using-keycloak>`
+- :ref:`Configure MinIO Authentication with Dex <minio-authenticate-using-dex>`
 
 Users can authenticate against MinIO using their externally managed credentials and the related :ref:`minio-security-token-service` API.
 Once authenticated, MinIO attempts to associate the user with one or more configured :ref:`policies <minio-policy>`.

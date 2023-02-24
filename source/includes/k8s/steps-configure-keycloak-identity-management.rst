@@ -41,8 +41,8 @@ Select :guilabel:`Configure a new mapper` to create a new mapping:
 - Set :guilabel:`User Attribute` to ``policy``
 - Set :guilabel:`Token Claim Name` to ``policy``
 - Set :guilabel:`Claim JSON Type` to ``String``
-- Set :guilabel:`Multivalued` to ``On``
-- Set :guilabel:`Aggregate attribute values` to ``On``
+- Set :guilabel:`Multivalued` to ``On`` - this allows users to inherit any ``policy`` set in their Groups
+- Set :guilabel:`Aggregate attribute values` to ``On`` - this allows users to inherit any ``policy`` set in their Groups
 
 Once created, assign the Client Scope to the MinIO client.
 Navigate to :guilabel:`Clients` and select the MinIO client.

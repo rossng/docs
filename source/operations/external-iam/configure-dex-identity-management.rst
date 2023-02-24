@@ -96,3 +96,10 @@ Install ``mc`` on a machine with network access to the cluster.
 See the ``mc`` :ref:`Installation Quickstart <mc-install>` for instructions on downloading and installing ``mc``.
 
    This procedure assumes a configured :mc:`alias <mc alias>` for the MinIO cluster. 
+
+.. _minio-external-identity-management-dex-configure:
+
+Configure MinIO for Dex Identity Management
+-------------------------------------------
+
+TODO

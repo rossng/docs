@@ -80,32 +80,35 @@ Defaults to those scopes advertised in the discovery document.
 
 .. start-minio-openid-redirect-uri
 
-Specify the redirect URI the MinIO Console uses when authenticating against the
-configured provider. Include the console port and ``/oauth_callback`` 
-as part of the URL:
+.. important::
+
+   This parameter is **deprecated** and will be removed in a future release.
+   Use :envvar:`MINIO_BROWSER_REDIRECT_URL` instead.
+
+The MinIO Console defaults to using the hostname of the node making the authentication request. 
+For MinIO deployments behind a load balancer or reverse proxy, specify this field to ensure the OIDC provider returns the authentication response to the correct MinIO Console URL.
+Include the Console hostname, port, and ``/oauth_callback``:
 
 .. code-block:: shell
 
    http://minio.example.net:consoleport/oauth_callback
 
-MinIO defaults to using the hostname of the node making the authentication
-request. MinIO deployments behind a load balancer or reverse proxy *may* 
-need to specify this field to ensure the OIDC provider returns the 
-authentication response to the correct URL.
+Ensure you start the MinIO Server with the :mc-cmd:`~minio server --console-address` option to set a static Console listen port.
+The default behavior with that option omitted is to select a random port number at startup.
 
-The specified URI *must* match one of the approved
-redirect / callback URIs on the provider. See the OpenID `Authentication Request 
-<https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest>`__ for
-more information.
-
-.. note::
-
-   The embedded MinIO Console by default uses a random port number selected at
-   server startup. Start the MinIO server process with the
-   :mc-cmd:`~minio server --console-address` option to specify a static
-   port number.
+The specified URI *must* match one of the approved redirect / callback URIs on the provider. 
+See the OpenID `Authentication Request <https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest>`__ for more information.
 
 .. end-minio-openid-redirect-uri
+
+.. start-minio-openid-redirect-uri-dynamic
+
+The MinIO Console defaults to using the hostname of the node making the authentication request as part of the redirect URI provided to the OIDC provider.
+For MinIO deployments behind a load balancer using a round-robin protocol, this may result in the load balancer returning the response to a different MinIO Node than the originating client.
+
+Specify this option as ``true`` to direct the MinIO Console to use the ``Host`` header of the originating request to construct the redirect URI passed to the OIDC provider.
+
+.. end-minio-openid-redirect-uri-dynamic
 
 .. start-minio-openid-claim-userinfo
 
