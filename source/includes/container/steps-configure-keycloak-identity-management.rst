@@ -1,7 +1,42 @@
-1) Start the Keycloak Container
+1) Create the Podman Pod
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Create a Podman Pod to deploy the Keycloak and MinIO containers in a Pod with shared networking.
+This ensures both containers can communicate normally.
+
+.. code-block:: shell
+   :class: copyable
+
+   podman pod create \ 
+        -p 9000:9000 -p 9090:9090 -p 8080:8080 \
+        -v ~/minio-keycloak/minio:/mnt/minio \
+        -n minio-keycloak
+
+Replace ``~/minio-keycloak/minio`` with a path to an empty folder in which the MinIO container stores data.
+
+You can alternatively deploy the Containers as Root to allow access to the host network for the purpose of inter-container networking.
+
+Deploying via Docker Compose is out of scope for this tutorial.
+
+2) Start the Keycloak Container
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-2) Configure or Create a Client for Accessing Keycloak
+Follow the instructions for running `Keycloak in a container <https://www.keycloak.org/server/containers>`__.
+The `Try Keycloak  in development mode <https://www.keycloak.org/server/containers#_trying_keycloak_in_development_mode>`__ steps are sufficient for this procedure.
+
+.. code-block:: shell
+   :class: copyable
+
+   podman run -dt \
+          --name keycloak \
+          --pod minio-keycloak \
+          -e KEYCLOAK_ADMIN=keycloakadmin \
+          -e KEYCLOAK_ADMIN_PASSWORD=keycloakadmin123 \
+          quay.io/keycloak/keycloak:latest start-dev
+
+You can access the Keycloak container over the ``http://localhost:8080`` in your browser.
+
+3) Configure or Create a Client for Accessing Keycloak
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Authenticate to the Keycloak :guilabel:`Administrative Console` and navigate to :guilabel:`Clients`.
@@ -23,7 +58,7 @@ Once created, change the provided example values as necessary to support your pr
 - From :guilabel:`Keys` set :guilabel:`Use JWKS URL` to ``On``
 - From :guilabel:`Advanced`, select :guilabel:`Advanced Settings` and set :guilabel:`Access Token Lifespan` to ``1 Hour``.
 
-3) Create Client Scope for MinIO Client
+4) Create Client Scope for MinIO Client
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Client scopes allow Keycloak to map user attributes as part of the Java Web Token (JWT) returned in authentication requests.
@@ -43,6 +78,7 @@ Select :guilabel:`Configure a new mapper` to create a new mapping:
 - Set :guilabel:`Name` to any recognizable name for the mapping (``minio-policy-mapper``)
 - Set :guilabel:`User Attribute` to ``policy``
 - Set :guilabel:`Token Claim Name` to ``policy``
+- Set :guilabel:`Add to ID token` to ``On``
 - Set :guilabel:`Claim JSON Type` to ``String``
 - Set :guilabel:`Multivalued` to ``On`` - this allows users to inherit any ``policy`` set in their Groups
 - Set :guilabel:`Aggregate attribute values` to ``On`` - this allows users to inherit any ``policy`` set in their Groups
@@ -53,7 +89,7 @@ Navigate to :guilabel:`Clients` and select the MinIO client.
 - Select :guilabel:`Client scopes`, then select :guilabel:`Add client scope`.
 - Select the previously created scope and set the :guilabel:`Assigned type` to ``default``.
 
-4) Apply the Necessary Attribute to Keycloak Users/Groups
+5) Apply the Necessary Attribute to Keycloak Users/Groups
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You must assign an attribute named ``policy`` to the Keycloak Users or Groups. 
@@ -88,12 +124,23 @@ If successful, the ``access_token`` contains the JWT necessary to use the MinIO 
 
 You can use a JWT decoder to review the payload an ensure it contains the ``policy`` key with one or more MinIO policies listed.
 
-5) Start the MinIO Container
+6) Start the MinIO Container
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-TODO
+The following command starts the MinIO Container and attaches it to the ``minio-keycloak`` pod.
 
-6) Configure MinIO for Keycloak Authentication
+.. code-block:: shell
+   :class: copyable
+
+   podman run -dt \
+          --name minio-server \
+          --pod minio-keycloak \
+          quay.io/minio/minio:RELEASE.2023-02-22T18-23-45Z server /mnt/data --console-address :9090
+
+Access the MinIO Console by visiting ``http://localhost:9090`` in your browser.
+Log in using the default credentials ``minioadmin:minioadmin``.
+
+7) Configure MinIO for Keycloak Authentication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 MinIO supports multiple methods for configuring Keycloak authentication:
@@ -161,11 +208,10 @@ MinIO supports multiple methods for configuring Keycloak authentication:
 
    .. tab-item:: Environment Variables
 
-      Set the following :ref:`environment variables <minio-server-envvar-external-identity-management-openid>` in the appropriate configuration location, such as ``/etc/default/minio``.
+      Set the following :ref:`environment variables <minio-server-envvar-external-identity-management-openid>` prior to starting the container using the ``-e ENVVAR=VALUE`` flag.
 
       The following example code sets the minimum required environment variables related to configuring Keycloak as an external identity management provider. 
       Replace the suffix ``_KEYCLOAK`` with a unique identifier for this Keycloak configuration.
-
 
       .. code-block:: shell
          :class: copyable
@@ -200,7 +246,7 @@ Specify a configured user and attempt to log in.
 MinIO should automatically redirect you to the Keycloak login entry.
 Upon successful authentication, Keycloak should redirect you back to the MinIO Console using either the originating Console URL *or* the :guilabel:`Redirect URI` if configured.
 
-7) Generate Application Credentials using the Security Token Service (STS)
+8) Generate Application Credentials using the Security Token Service (STS)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Applications using an S3-compatible SDK must specify credentials in the form of a access key and secret key.
@@ -213,7 +259,7 @@ You can test this workflow using the following sequence of HTTP calls and the ``
    .. code-block:: shell
       :class: copyable
 
-      curl -X POST "https://keycloak-url:port/realms/REALM/protocol/openid-connect/token" \
+      curl -X POST "https://localhost:8080/realms/REALM/protocol/openid-connect/token" \
            -H "Content-Type: application/x-www-form-urlencoded" \
            -d "username=USER" \
            -d "password=PASSWORD" \

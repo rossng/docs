@@ -26,7 +26,7 @@ This procedure specifically covers the following steps:
    - Log into the MinIO Tenant Console using SSO and a Keycloak-managed identity
    - Generate temporary S3 access credentials using the ``AssumeRoleWithWebIdentity`` Security Token Service (STS) API
 
-.. cond:: not k8s
+.. cond:: linux or macos or windows
 
    - Configuring Keycloak for use with MinIO authentication and authorization
    - Configuring a new or existing MinIO cluster to use Keycloak as the OIDC provider
@@ -34,8 +34,16 @@ This procedure specifically covers the following steps:
    - Log into the MinIO Tenant Console using SSO and a Keycloak-managed identity
    - Generate temporary S3 access credentials using the ``AssumeRoleWithWebIdentity`` Security Token Service (STS) API
 
+.. cond:: container
 
-This procedure was written and tested against Keycloak ``20.0.3``. 
+   - Deploy a Keycloak and MinIO Container
+   - Configuring Keycloak for use with MinIO authentication and authorization
+   - Configuring MinIO to use Keycloak as the OIDC provider
+   - Create policies to control access of Keycloak-authenticated users
+   - Log into the MinIO Tenant Console using SSO and a Keycloak-managed identity
+   - Generate temporary S3 access credentials using the ``AssumeRoleWithWebIdentity`` Security Token Service (STS) API
+
+This procedure was written and tested against Keycloak ``21.0.0``. 
 The provided instructions may work against other Keycloak versions.
 This procedure assumes you have prior experience with Keycloak and have reviewed their documentation for guidance and best practices in deploying, configuring, and managing the service.
 
@@ -68,21 +76,23 @@ Prerequisites
 
    This procedure *may* work as expected for older versions of MinIO.
 
-Keycloak Deployment and Realm Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. cond:: not container
 
-This procedure assumes an existing Keycloak deployment to which you have administrative access.
-Specifically, you must have permission to create and configure Realms, Clients, Client Scopes, Realm Roles, Users, and Groups on the Keycloak deployment.
+   Keycloak Deployment and Realm Configuration
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. cond:: k8s
+   This procedure assumes an existing Keycloak deployment to which you have administrative access.
+   Specifically, you must have permission to create and configure Realms, Clients, Client Scopes, Realm Roles, Users, and Groups on the Keycloak deployment.
 
-   For Keycloak deployments within the same Kubernetes cluster as the MinIO Tenant, this procedure assumes bidirectional access between the Keycloak and MinIO pods/services.
+   .. cond:: k8s
 
-   For Keycloak deployments external to the Kubernetes cluster, this procedure assumes an existing Ingress, Load Balancer, or similar Kubernetes network control component that manages network access to and from the MinIO Tenant.
+      For Keycloak deployments within the same Kubernetes cluster as the MinIO Tenant, this procedure assumes bidirectional access between the Keycloak and MinIO pods/services.
 
-.. cond:: not k8s
+      For Keycloak deployments external to the Kubernetes cluster, this procedure assumes an existing Ingress, Load Balancer, or similar Kubernetes network control component that manages network access to and from the MinIO Tenant.
 
-   This procedure assumes bidirectional access between the Keycloak and MinIO deployments.
+   .. cond:: not k8s
+
+      This procedure assumes bidirectional access between the Keycloak and MinIO deployments.
 
 Install and Configure ``mc`` with Access to the MinIO Cluster
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -96,7 +106,7 @@ Install ``mc`` on a machine with network access to the cluster.
 
 See the ``mc`` :ref:`Installation Quickstart <mc-install>` for instructions on downloading and installing ``mc``.
 
-   This procedure assumes a configured :mc:`alias <mc alias>` for the MinIO cluster. 
+This procedure assumes a configured :mc:`alias <mc alias>` for the MinIO cluster. 
 
 .. _minio-external-identity-management-keycloak-configure:
 
@@ -113,7 +123,7 @@ Configure MinIO for Keycloak Identity Management
 
 .. cond:: container
 
-   .. include:: /includes/k8s/steps-configure-keycloak-identity-management.rst
+   .. include:: /includes/container/steps-configure-keycloak-identity-management.rst
 
 Enable the Keycloak Admin REST API
 ----------------------------------
