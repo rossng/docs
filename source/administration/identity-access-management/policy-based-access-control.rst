@@ -902,7 +902,7 @@ Select the tab that corresponds to your identity manager of choice:
            - Returns the JWT ID claim from the client authentication information.
 
          * - ``jwt:upn``
-           - Returns the JWT ID claim from the client authentication information.
+           - Returns the User Principal Name claim from the client authentication information.
 
          * - ``jwt:name``
            - Returns the ``name`` claim for the user.

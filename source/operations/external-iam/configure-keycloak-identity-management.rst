@@ -20,32 +20,32 @@ This procedure specifically covers the following steps:
 
 .. cond:: k8s
 
-   - Configuring Keycloak for use with MinIO authentication and authorization
-   - Configuring a new or existing MinIO Tenant to use Keycloak as the OIDC provider
+   - Configure Keycloak for use with MinIO authentication and authorization
+   - Configure a new or existing MinIO Tenant to use Keycloak as the OIDC provider
    - Create policies to control access of Keycloak-authenticated users
    - Log into the MinIO Tenant Console using SSO and a Keycloak-managed identity
    - Generate temporary S3 access credentials using the ``AssumeRoleWithWebIdentity`` Security Token Service (STS) API
 
 .. cond:: linux or macos or windows
 
-   - Configuring Keycloak for use with MinIO authentication and authorization
-   - Configuring a new or existing MinIO cluster to use Keycloak as the OIDC provider
+   - Configure Keycloak for use with MinIO authentication and authorization
+   - Configure a new or existing MinIO cluster to use Keycloak as the OIDC provider
    - Create policies to control access of Keycloak-authenticated users
-   - Log into the MinIO Tenant Console using SSO and a Keycloak-managed identity
+   - Log into the MinIO Console using SSO and a Keycloak-managed identity
    - Generate temporary S3 access credentials using the ``AssumeRoleWithWebIdentity`` Security Token Service (STS) API
 
 .. cond:: container
 
    - Deploy a Keycloak and MinIO Container
-   - Configuring Keycloak for use with MinIO authentication and authorization
-   - Configuring MinIO to use Keycloak as the OIDC provider
+   - Configure Keycloak for use with MinIO authentication and authorization
+   - Configure MinIO to use Keycloak as the OIDC provider
    - Create policies to control access of Keycloak-authenticated users
-   - Log into the MinIO Tenant Console using SSO and a Keycloak-managed identity
+   - Log into the MinIO Console using SSO and a Keycloak-managed identity
    - Generate temporary S3 access credentials using the ``AssumeRoleWithWebIdentity`` Security Token Service (STS) API
 
 This procedure was written and tested against Keycloak ``21.0.0``. 
 The provided instructions may work against other Keycloak versions.
-This procedure assumes you have prior experience with Keycloak and have reviewed their documentation for guidance and best practices in deploying, configuring, and managing the service.
+This procedure assumes you have prior experience with Keycloak and have reviewed `their documentation <https://www.keycloak.org/documentation>`__ for guidance and best practices in deploying, configuring, and managing the service.
 
 Prerequisites
 -------------
@@ -138,15 +138,24 @@ This procedure assumes an existing MinIO deployment configured with Keycloak as 
 
 Navigate to the :guilabel:`Client scopes` view and create a new scope:
 
-- Set the :guilabel:`Name` to a recognizable name for the scope (``minio-admin-API-access``)
-- From :guilabel:`Mappers`, select :guilabel:`Configure a new mapper`
-- Select :guilabel:`Audience` and set the :guilabel:`Name` to any recognizable name for the mapping (``minio-admin-api-access-mapper``)
-- Set :guilabel:`Included Client Audience` to ``security-admin-console``.
+.. list-table::
+   :stub-columns: 1
+   :widths: 30 70
+   :width: 100%
+
+   * - :guilabel:`Name`
+     - Set to a recognizable name for the scope (``minio-admin-API-access``)
+   * - :guilabel:`Mappers`
+     - Select :guilabel:`Configure a new mapper`
+   * - :guilabel:`Audience`
+     - Set the :guilabel:`Name` to any recognizable name for the mapping (``minio-admin-api-access-mapper``)
+   * - :guilabel:`Included Client Audience`
+     - Set to ``security-admin-console``.
 
 Navigate to :guilabel:`Clients` and select the MinIO client
 
-- From :guilabel:`Service account roles`, select :guilabel:`Assign role` and assign the ``admin`` role
-- From :guilabel:`Client scopes`, select :guilabel:`Add client scope` and add the previously created scope
+1. From :guilabel:`Service account roles`, select :guilabel:`Assign role` and assign the ``admin`` role
+2. From :guilabel:`Client scopes`, select :guilabel:`Add client scope` and add the previously created scope
 
 Navigate to :guilabel:`Settings` and ensure :guilabel:`Authentication flow` includes ``Service accounts roles``.
 
@@ -176,7 +185,7 @@ You can validate the functionality by using the Admin REST API with the MinIO cl
    Replace the UUID with the unique ID for the user which you want to retrieve.
    The response should resemble the following:
 
-   .. code-block:: shell
+   .. code-block:: json
       
       {
          "id": "954de141-781b-4eaf-81bf-bf3751cdc5f2",
@@ -245,7 +254,6 @@ MinIO supports multiple methods for configuring Keycloak Admin API Support:
 
       The following example code sets the minimum required environment variables related to enabling the Keycloak Admin API for an existing Keycloak configuration.
       Replace the suffix ``_KEYCLOAK`` with the unique identifier for the target Keycloak configuration.
-
 
       .. code-block:: shell
          :class: copyable
