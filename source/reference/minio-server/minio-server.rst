@@ -2531,3 +2531,48 @@ identity management using an OpenID Connect (OIDC)-compatible provider. See
    This environment variable corresponds with the 
    :mc-conf:`identity_openid comment 
    <identity_openid.comment>` setting.
+
+.. _minio-server-envvar-external-identity-management-plugin:
+
+MinIO Identity Management Plugin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. envvar:: MINIO_IDENTITY_PLUGIN_URL
+   
+   *Required*
+
+   .. include:: /includes/common-minio-external-auth.rst
+      :start-after: start-minio-identity-management-plugin-url
+      :end-before: end-minio-identity-management-plugin-url
+
+.. envvar:: MINIO_IDENTITY_PLUGIN_ROLE_POLICY
+
+   *Required*
+
+   .. include:: /includes/common-minio-external-auth.rst
+      :start-after: start-minio-identity-management-role-policy
+      :end-before: end-minio-identity-management-role-policy
+
+.. envvar:: MINIO_IDENTITY_PLUGIN_TOKEN
+
+   *Optional*
+
+   .. include:: /includes/common-minio-external-auth.rst
+      :start-after: start-minio-identity-management-auth-token
+      :end-before: end-minio-identity-management-auth-token
+
+.. envvar:: MINIO_IDENTITY_PLUGIN_ROLE_ID
+
+   *Optional*
+
+   .. include:: /includes/common-minio-external-auth.rst
+      :start-after: start-minio-identity-management-role-id
+      :end-before: end-minio-identity-management-role-id
+
+.. envvar:: MINIO_IDENTITY_PLUGIN_COMMENT
+
+   *Optional*
+
+   .. include:: /includes/common-minio-external-auth.rst
+      :start-after: start-minio-identity-management-comment
+      :end-before: end-minio-identity-management-comment

@@ -32,6 +32,10 @@ MinIO supports the following STS API endpoints:
      - Active Directory / LDAP
      - Generates an access key and secret key using the AD/LDAP credentials specified to the API endpoint.
 
+   * - AssumeRoleWithCustomToken
+     - MinIO Identity Plugin
+     - Generates a token for use with an external identity provider and the :ref:`MinIO Identity Plugin <minio-external-identity-management-plugin>`.
+
 .. toctree::
    :titlesonly:
    :hidden:

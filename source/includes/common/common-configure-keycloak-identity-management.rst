@@ -185,7 +185,7 @@ You can test this workflow using the following sequence of HTTP calls and the ``
 
    Replace the ``TOKEN`` with the ``access_token`` value returned by Keycloak.
 
-   The API should return an XML document on success containing the following keys:
+   The API returns an XML document on success containing the following keys:
    
    - ``Credentials.AccessKeyId`` - the Access Key for the Keycloak User
    - ``Credentials.SecretAccessKey`` - the Secret Key for the Keycloak User
@@ -244,7 +244,7 @@ Enter the following information into the modal:
      - Specify the secret credential value for the Keycloak client created in Step 1
 
    * - :guilabel:`Display Name`
-     - Specify the user-facing name the MinIO Console should display as part of the Single-Sign On (SSO) workflow for the configured Keycloak service
+     - Specify the user-facing name the MinIO Console displays as part of the Single-Sign On (SSO) workflow for the configured Keycloak service
 
    * - :guilabel:`Scopes` 
      - Specify the OpenID scopes to include in the JWT, such as ``preferred_username`` or ``email``
@@ -273,7 +273,7 @@ The command takes all supported :ref:`OpenID Configuration Settings <minio-open-
    :class: copyable
    :substitutions:
 
-   mc admin idp openid add ALIAS keycloak \
+   mc admin idp openid add ALIAS PRIMARY_IAM \
       client_id=MINIO_CLIENT \
       client_secret=MINIO_CLIENT_SECRET \
       config_url="https://|KEYCLOAK_URL|/realms/REALM/.well-known/openid-configuration" \
@@ -286,8 +286,8 @@ The command takes all supported :ref:`OpenID Configuration Settings <minio-open-
    :widths: 30 70
    :width: 100%
 
-   * - ``keycloak``
-     - Set to a unique identifier for the Keycloak service
+   * - ``PRIMARY_IAM``
+     - Set to a unique identifier for the Keycloak service, such as ``keycloak_primary``
 
    * - | ``MINIO_CLIENT``
        | ``MINIO_CLIENT_SECRET``
@@ -297,7 +297,7 @@ The command takes all supported :ref:`OpenID Configuration Settings <minio-open-
      - Set to the address of the Keycloak OpenID configuration document (|KEYCLOAK_URL|)
 
    * - ``display_name`` 
-     - Set to a user-facing name the MinIO Console should display as part of the Single-Sign On (SSO) workflow for the configured Keycloak service
+     - Set to a user-facing name the MinIO Console displays as part of the Single-Sign On (SSO) workflow for the configured Keycloak service
 
    * - ``scopes`` 
      - Set to a list of OpenID scopes you want to include in the JWT, such as ``preferred_username`` or ``email``
@@ -322,20 +322,20 @@ The following example code sets the minimum required environment variables relat
    :class: copyable
    :substitutions:
 
-   MINIO_IDENTITY_OPENID_CONFIG_URL_KEYCLOAK="https://|KEYCLOAK_URL|/.well-known/openid-configuration"
-   MINIO_IDENTITY_OPENID_CLIENT_ID_KEYCLOAK="MINIO_CLIENT"
-   MINIO_IDENTITY_OPENID_CLIENT_SECRET_KEYCLOAK="MINIO_CLIENT_SECRET"
-   MINIO_IDENTITY_OPENID_DISPLAY_NAME_KEYCLOAK="SSO_IDENTIFIER"
-   MINIO_IDENTITY_OPENID_SCOPES="openid,email,preferred_username"
-   MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC="on"
+   MINIO_IDENTITY_OPENID_CONFIG_URL_PRIMARY_IAM="https://|KEYCLOAK_URL|/.well-known/openid-configuration"
+   MINIO_IDENTITY_OPENID_CLIENT_ID_PRIMARY_IAM="MINIO_CLIENT"
+   MINIO_IDENTITY_OPENID_CLIENT_SECRET_PRIMARY_IAM="MINIO_CLIENT_SECRET"
+   MINIO_IDENTITY_OPENID_DISPLAY_NAME_PRIMARY_IAM="SSO_IDENTIFIER"
+   MINIO_IDENTITY_OPENID_SCOPES_PRIMARY_IAM="openid,email,preferred_username"
+   MINIO_IDENTITY_OPENID_REDIRECT_URI_DYNAMIC_PRIMARY_IAM="on"
 
 .. list-table::
    :stub-columns: 1
    :widths: 30 70
    :width: 100%
 
-   * - ``_KEYCLOAK``
-     - Replace the suffix ``_KEYCLOAK`` with a unique identifier for this Keycloak configuration.
+   * - ``_PRIMARY_IAM``
+     - Replace the suffix ``_PRIMARY_IAM`` with a unique identifier for this Keycloak configuration.
        For example, ``MINIO_IDENTITY_OPENID_CONFIG_URL_KEYCLOAK_PRIMARY``.
 
        You can omit the suffix if you intend to only configure a single OIDC provider for the deployment.
@@ -351,7 +351,7 @@ The following example code sets the minimum required environment variables relat
      - Specify the Keycloak client ID and secret configured in Step 1
 
    * - :envvar:`DISPLAY_NAME <MINIO_IDENTITY_OPENID_DISPLAY_NAME>` 
-     - Specify the user-facing name the MinIO Console should displays as part of the Single-Sign On (SSO) workflow for the configured Keycloak service
+     - Specify the user-facing name the MinIO Console displays as part of the Single-Sign On (SSO) workflow for the configured Keycloak service
 
    * - :envvar:`OPENID_SCOPES <MINIO_IDENTITY_OPENID_SCOPES>`
 

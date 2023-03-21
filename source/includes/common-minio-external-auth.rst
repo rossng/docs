@@ -316,3 +316,38 @@ Defaults to ``off``
 Specify a comment to associate to the AD/LDAP configuration.
 
 .. end-minio-ad-ldap-comment
+
+.. start-minio-identity-management-plugin-url
+
+The webhook endpoint for the external identity management service (``https://authservice.example.net:8080/auth``).
+
+.. end-minio-identity-management-plugin-url
+
+.. start-minio-identity-management-auth-token
+
+An authentication token to present to the configured webhook endpoint.
+
+Specify a supported HTTP `Authentication scheme <https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes>`__ as a string value, such as ``"Bearer TOKEN"``.
+MinIO sends the token using the HTTP `Authorization <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization>`__ header.
+
+.. end-minio-identity-management-auth-token
+
+.. start-minio-identity-management-role-policy
+
+Specify a comma separated list of MinIO :ref:`policies <minio-policy>` to assign to authenticated users.
+
+.. end-minio-identity-management-role-policy
+
+.. start-minio-identity-management-role-id
+
+Specify a unique ID MinIO uses to generate an ARN for this identity manager.
+
+If omitted, MinIO automatically generates the ID and prints the full ARN to the server log.
+
+.. end-minio-identity-management-role-id
+
+.. start-minio-identity-management-comment
+
+Specify a comment to associate to the identity configuration.
+
+.. end-minio-identity-management-comment

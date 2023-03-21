@@ -46,8 +46,7 @@ MinIO supports multiple methods for configuring Keycloak authentication:
    .. tab-item:: MinIO Operator Console
 
       You can use the MinIO Operator Console to configure Keycloak as the External Identity Provider for the MinIO Tenant.
-
-      .. include:: /includes/common/common-k8s-connect-operator-console.rst
+      See :ref:`minio-operator-console-connect` for specific instructions.
 
       Select :guilabel:`Identity Provider` from the left-hand navigation bar, then select :guilabel:`OpenID`.
       Select :guilabel:`Create Configuration` to create a new configuration.
@@ -109,7 +108,7 @@ MinIO supports multiple methods for configuring Keycloak authentication:
          :start-after: start-configure-keycloak-minio-console
          :end-before: end-configure-keycloak-minio-console
 
-      Select :guilabel:`Save` to save the configuration.
+      Select :guilabel:`Save` to apply the configuration.
 
    .. tab-item:: CLI
 
@@ -121,7 +120,7 @@ You must restart the MinIO deployment for the changes to apply.
 
 Check the MinIO logs and verify that startup succeeded with no errors related to the OIDC configuration.
 
-If you attempt to log in with the Console, you should now see a (SSO) button using the configured :guilabel:`Display Name`.
+If you attempt to log in with the Console, you should now see an (SSO) button using the configured :guilabel:`Display Name`.
 
 Specify a configured user and attempt to log in.
 MinIO should automatically redirect you to the Keycloak login entry.
@@ -138,7 +137,7 @@ Upon successful authentication, Keycloak should redirect you back to the MinIO C
 Next Steps
 ~~~~~~~~~~
 
-Applications should implement the STS flow using their SDK of choice.
+Applications should implement the :ref:`STS AssumeRoleWithWebIdentity <minio-sts-assumerolewithwebidentity>` flow using their :ref:`SDK <minio-drivers>` of choice.
 When STS credentials expire, applications should have logic in place to regenerate the JWT token, STS token, and MinIO credentials before retrying and continuing operations.
 
 Alternatively, users can generate :ref:`access keys <minio-id-access-keys>` through the MinIO Console for the purpose of creating long-lived API-key like access using their Keycloak credentials.

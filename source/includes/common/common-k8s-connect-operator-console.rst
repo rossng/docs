@@ -4,12 +4,11 @@
    .. note::
       
       Some Kubernetes deployments may experience issues with timeouts during port-forwarding operations with the Operator Console.
-      Use one of the methods in the other tabs on this section as a work-around.
+      Select the :guilabel:`Node Ports` section to view instructions for alternative access.
+      You can alternatively configure your preferred Ingress to grant access to the Operator Console service.
       See https://github.com/kubernetes/kubectl/issues/1368 for more information.
 
-   Run the :mc:`kubectl minio proxy` command to temporarily forward traffic from
-   the :ref:`MinIO Operator Console <minio-operator-console>` service to your 
-   local machine:
+   Run the :mc:`kubectl minio proxy` command to temporarily forward traffic from the :ref:`MinIO Operator Console <minio-operator-console>` service to your local machine:
 
    .. cond:: k8s and not openshift
 
@@ -25,8 +24,7 @@
 
          oc minio proxy
 
-   The command output includes a JWT token you must use to log into the
-   Operator Console. 
+   The command output includes a required token required for logging into the Operator Console. 
 
    .. image:: /images/k8s/operator-dashboard.png
       :align: center
@@ -34,10 +32,9 @@
       :class: no-scaled-link
       :alt: MinIO Operator Console
 
-   You can deploy a new :ref:`MinIO Tenant <minio-k8s-deploy-minio-tenant>` from
-   the Operator Dashboard.
+   You can deploy a new :ref:`MinIO Tenant <minio-k8s-deploy-minio-tenant>` from the Operator Dashboard.
 
-.. dropdown:: Node Ports
+.. dropdown:: NodePorts
 
    Use the following command to identify the :kube-docs:`NodePorts <concepts/services-networking/service/#type-nodeport>` configured for the Operator Console.
    If your local host does not have the ``jq`` utility installed, you can run the first command and locate the ``spec.ports`` section of the output.

@@ -86,4 +86,6 @@ Use either the MinIO Console *or* the :mc:`mc admin policy` command to create po
 OIDC Policy Variables
 ---------------------
 
-.. todo - instructions
+.. include:: /includes/common/common-minio-oidc.rst
+   :start-after: start-minio-oidc-policy-variables
+   :end-before: end-minio-oidc-policy-variables

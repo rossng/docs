@@ -72,7 +72,7 @@ Prerequisites
    ~~~~~~~~~~~~~~~~
 
    This procedure assumes an existing MinIO cluster running the :minio-git:`latest stable MinIO version <minio/releases/latest>`. 
-   Defer to the :ref:`minio-installation` for more complete documentation on new MinIO deployments.
+   Refer to the :ref:`minio-installation` for more complete documentation on new MinIO deployments.
 
    This procedure *may* work as expected for older versions of MinIO.
 
@@ -130,6 +130,7 @@ Enable the Keycloak Admin REST API
 
 MinIO supports using the Keycloak Admin REST API for checking if an authenticated user exists *and* is enabled on the Keycloak realm.
 This functionality allows MinIO to more quickly remove access from previously authenticated Keycloak users.
+Without this functionality, the earliest point in time that MinIO could disable access for a disabled or removed user is when the last retrieved authentication token expires.
 
 This procedure assumes an existing MinIO deployment configured with Keycloak as an external identity manager.
 
@@ -213,9 +214,7 @@ You can validate the functionality by using the Admin REST API with the MinIO cl
          }
       }
 
-   MinIO would revoke access for an authenticated user if the returned value has ``enabled: false``, or if the Admin API returned no matching user.
-
-If you do not enable this functionality, the earliest point in time that MinIO could disable access for a disabled or removed user is when the last retrieved authentication token expires.
+   MinIO would revoke access for an authenticated user if the returned value has ``enabled: false`` or ``null`` (user was removed from Keycloak).
 
 3) Enable Keycloak Admin Support on MinIO
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -253,14 +252,14 @@ MinIO supports multiple methods for configuring Keycloak Admin API Support:
       Set the following :ref:`environment variables <minio-server-envvar-external-identity-management-openid>` in the appropriate configuration location, such as ``/etc/default/minio``.
 
       The following example code sets the minimum required environment variables related to enabling the Keycloak Admin API for an existing Keycloak configuration.
-      Replace the suffix ``_KEYCLOAK`` with the unique identifier for the target Keycloak configuration.
+      Replace the suffix ``_PRIMARY_IAM`` with the unique identifier for the target Keycloak configuration.
 
       .. code-block:: shell
          :class: copyable
 
-         MINIO_IDENTITY_OPENID_VENDOR_KEYCLOAK="keycloak"
-         MINIO_IDENTITY_OPENID_KEYCLOAK_ADMIN_URL_KEYCLOAK="https://keycloak-url:port/admin"
-         MINIO_IDENTITY_OPENID_KEYCLOAK_REALM="REALM"
+         MINIO_IDENTITY_OPENID_VENDOR_PRIMARY_IAM="keycloak"
+         MINIO_IDENTITY_OPENID_KEYCLOAK_ADMIN_URL_PRIMARY_IAM="https://keycloak-url:port/admin"
+         MINIO_IDENTITY_OPENID_KEYCLOAK_REALM_PRIMARY_IAM="REALM"
 
       - Specify the Keycloak admin URL to :envvar:`MINIO_IDENTITY_OPENID_KEYCLOAK_ADMIN_URL`
       - Specify the Keycloak Realm name to :envvar:`MINIO_IDENTITY_OPENID_KEYCLOAK_REALM`
